@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html dir="rtl"lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>Mohammad's shop</title>
+</head>
+<body>
+    <p>category: {{ product.category }}</p>
+    <p>name: {{ product.name }}</p>
+    <p>image: <img src="{{ product.image.url }}" alt="chocolate image"></p>
+    <p>description: {{ product.description }}</p>
+    <p>real price: {{ product.price }}</p>
+    <p>تخفیف: ٪{{ product.discount }}</p>
+</body>
+</html>
