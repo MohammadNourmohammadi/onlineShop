@@ -34,3 +34,17 @@ class UserChangeForm(forms.ModelForm):
 
     def clean_password(self):
         return self.initial['password']
+
+
+class UserLoginForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput())
+    password = forms.CharField(widget=forms.PasswordInput())
+
+
+class UserRegistrationForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(), label='ایمیل')
+    first_name = forms.CharField(widget=forms.TextInput(), max_length=20, label='نام')
+    last_name = forms.CharField(widget=forms.TextInput(), max_length=20, label='نام خانوادگی')
+    phone_number = forms.CharField(max_length=11, widget=forms.TextInput(), label='تلفن همراه')
+    password1 = forms.CharField(widget=forms.PasswordInput(), label='رمز')
+    password2 = forms.CharField(widget=forms.PasswordInput(), label='تکرار رمز')
