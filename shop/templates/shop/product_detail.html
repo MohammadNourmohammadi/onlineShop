@@ -11,5 +11,11 @@
     <p>description: {{ product.description }}</p>
     <p>real price: {{ product.price }}</p>
     <p>تخفیف: ٪{{ product.discount }}</p>
+
+    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" class="btn btn-primary" value="اضافه کردن به سبد">
+    </form>
 </body>
 </html>
