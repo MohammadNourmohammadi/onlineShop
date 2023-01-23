@@ -5,6 +5,13 @@
     <title>Mohammad's shop</title>
 </head>
 <body>
+
+{% if user.is_authenticated %}
+    <span>خوش آمدید {{ user.first_name }}</span>
+{% else %}
+    <a href={% url "accounts:login" %}> وارد شوید</a>
+{% endif %}
+
 <h1> Categories</h1>
 <ul>
     {% for category in categories %}
@@ -15,7 +22,7 @@
 <h1> products</h1>
 <ul>
     {% for product in products %}
-        <li><a href="{{ product.get_absolut_url }} "> {{ product.name }} </a></li>
+        <li><a href="{{ product.get_absolut_url }} "> <img src="{{ product.image }} ">  </a></li>
     {% endfor %}
 </ul>
 
