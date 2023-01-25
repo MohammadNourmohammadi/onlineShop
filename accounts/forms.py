@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django import forms
-from .models import MyUser
+from .models import MyUser, UserAddress
 
 
 class UserCreationForm(forms.ModelForm):
@@ -48,3 +48,12 @@ class UserRegistrationForm(forms.Form):
     phone_number = forms.CharField(max_length=11, widget=forms.TextInput(), label='تلفن همراه')
     password1 = forms.CharField(widget=forms.PasswordInput(), label='رمز')
     password2 = forms.CharField(widget=forms.PasswordInput(), label='تکرار رمز')
+
+
+class UserAddressForm(forms.Form):
+    address = forms.ChoiceField(choices=(), label="آدرس")
+
+    def __init__(self, user, *args, **kwargs):
+        super(UserAddressForm, self).__init__(*args, **kwargs)
+        valid_address = UserAddress.objects.filter(user=user)
+        self.fields['address'].choices = [(address.id, address) for address in valid_address]
