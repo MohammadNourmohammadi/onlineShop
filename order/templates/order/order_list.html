@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 5px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #D6EEEE;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>#</th>
+        <th>تاریخ ساخت</th>
+        <th>قیمت کل</th>
+        <th>جزئیات سفارش</th>
+        <th>آدرس</th>
+        <th>پرداخت</th>
+    </tr>
+
+    {% for order in orders %}
+        <tr>
+            <td> {{ forloop.counter }} </td>
+            <td> {{ order.created }}</td>
+            <td> {{ order.get_total_price }}</td>
+            <td><a href="{% url 'order:detail' order.id %}">جزئیات</a></td>
+            <form action="{% url 'order:payment' order.id %}" method="post">
+                {% csrf_token %}
+                <td>{{ address_form }}</td>
+                <td> <input type="submit" class="btn btn-primary" value="پرداخت"> </td>
+            </form>
+        </tr>
+
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
