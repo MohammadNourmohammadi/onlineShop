@@ -8,6 +8,9 @@
 
 {% if user.is_authenticated %}
     <span>خوش آمدید {{ user.first_name }}</span>
+    <a href="{% url 'accounts:logout' %}"> | خارج شدن |   </a>
+    <a href="{% url 'accounts:address_list' %}">|  آدرس های شما | </a>
+    <a href="{% url 'cart:detail' %}"> |  سبد شما   </a>
 {% else %}
     <a href={% url "accounts:login" %}> وارد شوید</a>
 {% endif %}
