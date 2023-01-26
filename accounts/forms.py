@@ -50,10 +50,25 @@ class UserRegistrationForm(forms.Form):
     password2 = forms.CharField(widget=forms.PasswordInput(), label='تکرار رمز')
 
 
-class UserAddressForm(forms.Form):
+class ChoiceUserAddressForm(forms.Form):
     address = forms.ChoiceField(choices=(), label="آدرس")
 
     def __init__(self, user, *args, **kwargs):
-        super(UserAddressForm, self).__init__(*args, **kwargs)
+        super(ChoiceUserAddressForm, self).__init__(*args, **kwargs)
         valid_address = UserAddress.objects.filter(user=user)
         self.fields['address'].choices = [(address.id, address) for address in valid_address]
+
+
+class UserAddressForm(forms.ModelForm):
+    class Meta:
+        model = UserAddress
+        exclude = ('user',)
+        labels = {
+            'name': 'اسم آدرس',
+            'zip_code': 'کد پستی',
+            'address_text': 'آدرس',
+            'name_of_transferee': 'نام دریافت کننده',
+            'phone_of_transferee': 'شماره دریافت کننده',
+            'state': 'استان',
+            'city': 'شهر',
+        }

@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views import generic
-from accounts.forms import UserAddressForm
+from accounts.forms import ChoiceUserAddressForm
 
 # Create your views here.
 from django.views.decorators.http import require_POST
@@ -40,7 +40,7 @@ class OrderListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['address_form'] = UserAddressForm(self.request.user)
+        context['address_form'] = ChoiceUserAddressForm(self.request.user)
         return context
 
 

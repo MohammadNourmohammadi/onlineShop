@@ -1,8 +1,11 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from accounts.forms import UserLoginForm, UserRegistrationForm
+from accounts.forms import UserLoginForm, UserRegistrationForm, UserAddressForm
 from accounts.models import MyUser
+from django.views import generic
+from .models import UserAddress
+from django.contrib.auth.decorators import login_required
 
 
 def user_login(request):
@@ -46,3 +49,38 @@ def register(request):
     else:
         form = UserRegistrationForm()
     return render(request, 'accounts/register.html', {'form': form})
+
+
+class AddressListView(generic.ListView):
+    context_object_name = 'addresses'
+    template_name = 'accounts/address_list.html'
+
+    def get_queryset(self):
+        return UserAddress.objects.filter(user=self.request.user)
+
+
+class AddressDetailView(generic.DetailView):
+    context_object_name = 'address'
+    template_name = 'accounts/address_detail.html'
+
+    def get_queryset(self):
+        return UserAddress.objects.filter(user=self.request.user)
+
+
+@login_required()
+def create_address(request):
+    if request.method == 'POST':
+        form = UserAddressForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            address = UserAddress.objects.create(user=request.user, name=data['name'],
+                                                 name_of_transferee=data['name_of_transferee'],
+                                                 phone_of_transferee=data['phone_of_transferee'], city=data['city'],
+                                                 state=data['state'], address_text=data['address_text'],
+                                                 zip_code=data['zip_code'])
+            address.save()
+            return redirect('accounts:address_list')
+
+    else:
+        form = UserAddressForm()
+    return render(request, 'accounts/address_create.html', {'form': form})
