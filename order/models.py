@@ -11,6 +11,7 @@ class Order(models.Model):
     created = models.DateTimeField(default=timezone.now)
     is_paid = models.BooleanField(default=False)
     address = models.ForeignKey(UserAddress, related_name='order_addresses', on_delete=models.SET_NULL, null=True)
+    authority = models.CharField(max_length=100, null=True)
 
     class Meta:
         ordering = ('created',)

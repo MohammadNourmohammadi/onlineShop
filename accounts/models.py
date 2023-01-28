@@ -17,6 +17,7 @@ class MyUser(AbstractUser):
         max_length=11, unique=True, error_messages={
             'unique': "A user with that phone number already exists."
         })
+    is_delivery_man = models.BooleanField(default=False)
 
     objects = MyUserManager()
 
