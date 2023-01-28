@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 5px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #D6EEEE;
+        }
+    </style>
+</head>
+<body>
+
+<form action="{% url 'delivery:post_list' %}" method="get">
+    <input type="checkbox" name="is_post" value="is_post">
+    <label for="is_post"> پست شده ها نمایش داده شود</label><br>
+    <input type="submit" value="Submit">
+</form>
+
+<table>
+    <tr>
+        <th>#</th>
+        <th>تاریخ ساخت</th>
+        <th>نام تحویل گیرنده</th>
+        <th>شماره تحویل گیرنده</th>
+        <th>شناسه پرداخت</th>
+        <th>جزئیات</th>
+    </tr>
+
+    {% for delivery_pack in delivery_packs %}
+        <tr>
+            <td> {{ forloop.counter }} </td>
+            <td> {{ delivery_pack.created }}</td>
+            <td> {{ delivery_pack.name_of_transferee }}</td>
+            <td> {{ delivery_pack.phone_of_transferee }}</td>
+            <td> {{ delivery_pack.authority }}</td>
+            <td><a href="{% url 'delivery:detail' delivery_pack.id %}">جزئیات</a></td>
+        </tr>
+
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
