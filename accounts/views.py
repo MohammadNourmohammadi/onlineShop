@@ -7,6 +7,9 @@ from django.views import generic
 from .models import UserAddress
 from django.contrib.auth.decorators import login_required
 from accounts import email_service
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, PasswordResetDoneView, \
+    PasswordResetCompleteView
+from django.urls import reverse_lazy
 
 
 def user_login(request):
@@ -86,3 +89,22 @@ def create_address(request):
     else:
         form = UserAddressForm()
     return render(request, 'accounts/address_create.html', {'form': form})
+
+
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = 'accounts/email_templates/password_reset_email.html'
+    template_name = 'accounts/password_reset.html'
+    success_url = reverse_lazy('accounts:password_reset_done')
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'accounts/password_reset_confirm.html'
+    success_url = reverse_lazy('accounts:password_reset_complete')
+
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'accounts/password_reset_done.html'
+
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'accounts/password_reset_complete.html'
