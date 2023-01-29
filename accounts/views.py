@@ -6,6 +6,7 @@ from accounts.models import MyUser
 from django.views import generic
 from .models import UserAddress
 from django.contrib.auth.decorators import login_required
+from accounts import email_service
 
 
 def user_login(request):
@@ -42,6 +43,7 @@ def register(request):
                                                   phone_number=data['phone_number'], )
                 login(request, user)
                 messages.success(request, 'با موفقیت ثبت نام شدید', 'success')
+                email_service.welcome_email_new_user(user)
                 return redirect('shop:index')
             else:
                 messages.error(request, 'رمز ها یکسان نیستند', 'danger')
