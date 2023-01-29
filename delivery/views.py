@@ -41,7 +41,7 @@ def delivery_pack_detail(request, pk):
         else:
             delivery_pack.is_post_delivered = False
         delivery_pack.save()
-        return redirect('delivery:not-post')
+        return redirect('delivery:post_list')
     else:
         form = PostDeliveryForm()
         delivery_pack = get_object_or_404(DeliveryPack, pk=pk)
