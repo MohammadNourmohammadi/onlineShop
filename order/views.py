@@ -20,6 +20,9 @@ def order_create(request):
     if cart.size_cart() == 0:
         messages.error(request, 'سبد شما خالی است', 'danger')
         return redirect('cart:detail')
+    if request.user.get_size_open_orders() >= 5:
+        messages.error(request, 'نمی توان بیشتر از ۵ تا سفارش باز داشت', 'danger')
+        return redirect('order:order_list')
     order = Order.objects.create(user=request.user)
     for item in cart:
         OrderItem.objects.create(order=order, product=item['product'], quantity=item['quantity'])
