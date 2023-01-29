@@ -5,3 +5,4 @@ db.sqlite3
 media/
 *.mo
 static/shop/images/
+onlineShop/passwords.py
