@@ -10,7 +10,6 @@ from accounts.models import UserAddress
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 # from suds import Client
-
 from cart.utils.cart import Cart
 from order.models import Order, OrderItem
 
@@ -18,6 +17,9 @@ from order.models import Order, OrderItem
 @login_required()
 def order_create(request):
     cart = Cart(request)
+    if cart.size_cart() == 0:
+        messages.error(request, 'سبد شما خالی است', 'danger')
+        return redirect('cart:detail')
     order = Order.objects.create(user=request.user)
     for item in cart:
         OrderItem.objects.create(order=order, product=item['product'], quantity=item['quantity'])
