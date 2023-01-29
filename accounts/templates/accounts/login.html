@@ -9,6 +9,8 @@
         Login Page
     {% endblock %}
 
+    {% include 'messages.html' %}
+
     {% block content %}
         <form action="" method="post" novalidate>
             {% csrf_token %}

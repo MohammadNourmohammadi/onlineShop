@@ -10,9 +10,7 @@
         Register Page
     {% endblock %}
 
-    {% if messages.error %}
-        <span>{{ messages.error }} </span>
-    {% endif %}
+    {% include 'messages.html' %}
 
     {% block content %}
         <form action="" method="post">
