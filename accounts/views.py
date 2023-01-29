@@ -75,6 +75,9 @@ class AddressDetailView(generic.DetailView):
 @login_required()
 def create_address(request):
     if request.method == 'POST':
+        if request.user.get_size_address() >= 5:
+            messages.error(request, 'نمی توان بیشتر از ۵ تا آدرس ساخت', 'danger')
+            return redirect('accounts:address_list')
         form = UserAddressForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data

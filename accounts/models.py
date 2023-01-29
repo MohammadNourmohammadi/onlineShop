@@ -27,6 +27,12 @@ class MyUser(AbstractUser):
     def __str__(self):
         return self.email
 
+    def get_size_address(self):
+        return len(self.address.all())
+
+    def get_size_open_orders(self):
+        return len(self.orders.all().filter(is_paid=False))
+
 
 class UserAddress(models.Model):
     name = models.CharField(max_length=30, default="خانه")
