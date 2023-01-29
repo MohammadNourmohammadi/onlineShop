@@ -48,3 +48,6 @@ class Cart:
     def clear(self):
         del self.session[CART_SESSION_ID]
         self.save()
+
+    def size_cart(self):
+        return len(self.cart.values())
