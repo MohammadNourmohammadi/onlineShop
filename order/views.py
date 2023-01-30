@@ -73,6 +73,8 @@ def payment(request, order_id):
 @login_required()
 def delete_order(request, pk):
     order = get_object_or_404(Order, pk=pk)
+    if order.user != request.user:
+        raise Http404
     if order.is_paid:
         messages.error(request, 'نمی توان سفارش پرداخت شده را حذف کرد', 'danger')
         return redirect('order:order_list')
