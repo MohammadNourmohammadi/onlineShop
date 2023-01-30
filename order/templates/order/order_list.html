@@ -17,6 +17,10 @@
         tr:nth-child(even) {
             background-color: #D6EEEE;
         }
+
+        form {
+            display: inline;
+        }
     </style>
 </head>
 <body>
@@ -31,6 +35,7 @@
         <th>جزئیات سفارش</th>
         <th>آدرس</th>
         <th>پرداخت</th>
+        <th>حذف سفارش</th>
     </tr>
 
     {% for order in orders %}
@@ -41,14 +46,21 @@
             <td><a href="{% url 'order:detail' order.id %}">جزئیات</a></td>
             <form action="{% url 'order:payment' order.id %}" method="post">
                 {% csrf_token %}
-                <td>{{ address_form }}</td>
-                <td> <input type="submit" class="btn btn-primary" value="پرداخت"> </td>
+                <td><select name="address">
+                    {% for address in addresses %}
+                        <option value="{{ address.id }}">{{ address.name }}</option>
+                    {% endfor %}
+                </select></td>
+                <td><input type="submit" class="btn btn-primary" value="پرداخت"></td>
             </form>
+            <td> <a href="{% url 'order:delete_order' order.id %}">حذف</a> </td>
         </tr>
 
     {% endfor %}
 
 </table>
+
+<a href="{% url 'accounts:create_Address' %}" target="_blank">ساخت آدرس</a>
 
 </body>
 </html>
