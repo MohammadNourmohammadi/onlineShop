@@ -5,6 +5,6 @@ from . import views
 app_name = 'delivery'
 
 urlpatterns = [
-    path('not-post/', login_required(views.PostDeliveryPackListView.as_view()), name='post_list'),
+    path('list/', login_required(views.PostDeliveryPackListView.as_view()), name='post_list'),
     path('<int:pk>/', login_required(views.delivery_pack_detail), name='detail'),
 ]

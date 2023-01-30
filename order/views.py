@@ -46,7 +46,7 @@ class OrderListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['address_form'] = ChoiceUserAddressForm(self.request.user)
+        context['addresses'] = self.request.user.address.all()
         return context
 
 
@@ -57,6 +57,9 @@ def payment(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     if order.user != request.user:
         raise Http404
+    if 'address' not  in request.POST:
+        messages.error(request, 'آدرس باید انتخاب شود', 'danger')
+        return redirect('order:order_list')
     address = get_object_or_404(UserAddress, pk=request.POST['address'])
     order.is_paid = True
     order.authority = "Mohammad is king"
@@ -65,3 +68,14 @@ def payment(request, order_id):
     create_delivery_pack(order)
     context = {'user': request.user, 'price': order.get_total_price, 'address': request.POST['address']}
     return render(request, 'order/payment.html', context)
+
+
+@login_required()
+def delete_order(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    if order.is_paid:
+        messages.error(request, 'نمی توان سفارش پرداخت شده را حذف کرد', 'danger')
+        return redirect('order:order_list')
+    order.delete()
+    messages.success(request, "سفارش با موفقیت حذف شد")
+    return redirect('order:order_list')
