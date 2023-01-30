@@ -22,4 +22,6 @@ urlpatterns = [
     path('password-reset-complete/',
          views.CustomPasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
+    path('address/delete/<int:pk>/', views.delete_address, name="delete_address"),
+    path('address/edit/<int:pk>/', views.edit_address, name='edit_address'),
 ]

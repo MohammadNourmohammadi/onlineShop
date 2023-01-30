@@ -72,3 +72,14 @@ class UserAddressForm(forms.ModelForm):
             'state': 'استان',
             'city': 'شهر',
         }
+
+    def __init__(self, *args, **kwargs):
+        super(UserAddressForm, self).__init__(*args, **kwargs)
+        if self.instance:
+            self.initial['name'] = self.instance.name
+            self.initial['zip_code'] = self.instance.zip_code
+            self.initial['address_text'] = self.instance.address_text
+            self.initial['name_of_transferee'] = self.instance.name_of_transferee
+            self.initial['phone_of_transferee'] = self.instance.phone_of_transferee
+            self.initial['state'] = self.instance.state
+            self.initial['city'] = self.instance.city

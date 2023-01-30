@@ -20,6 +20,7 @@
     </style>
 </head>
 <body>
+{% include 'messages.html' %}
 
 <table>
     <tr>
@@ -28,6 +29,8 @@
         <th>نام تحویل گیرنده</th>
         <th>شماره تحویل گیرنده</th>
         <th>جزئیات</th>
+        <th>حذف آدرس</th>
+        <th>ویرایش آدرس</th>
     </tr>
 
     {% for address in addresses %}
@@ -37,6 +40,8 @@
             <td> {{ address.name_of_transferee }}</td>
             <td> {{ address.phone_of_transferee }}</td>
             <td><a href="{% url 'accounts:address_detail' address.id %}">جزئیات</a></td>
+            <td><a href="{% url 'accounts:delete_address' address.id %}">حذف</a></td>
+            <td><a href="{% url 'accounts:edit_address' address.id %}">ویرایش آدرس</a></td>
         </tr>
 
     {% endfor %}

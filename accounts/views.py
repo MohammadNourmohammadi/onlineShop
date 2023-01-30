@@ -1,5 +1,6 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404
 from django.contrib.auth import authenticate, login, logout
 from accounts.forms import UserLoginForm, UserRegistrationForm, UserAddressForm
 from accounts.models import MyUser
@@ -111,3 +112,38 @@ class CustomPasswordResetDoneView(PasswordResetDoneView):
 
 class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'accounts/password_reset_complete.html'
+
+
+@login_required()
+def delete_address(request, pk):
+    address = get_object_or_404(UserAddress, pk=pk)
+    if address.user != request.user:
+        raise Http404
+    address.delete()
+    messages.success(request, "آدرس با موفقیت حذف شد")
+    return redirect('accounts:address_list')
+
+
+@login_required()
+def edit_address(request, pk):
+    address = get_object_or_404(UserAddress, pk=pk)
+    if request.user != address.user:
+        raise Http404
+    if request.method == 'POST':
+        form = UserAddressForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            address.name = data['name']
+            address.zip_code = data['zip_code']
+            address.name_of_transferee = data['name_of_transferee']
+            address.phone_of_transferee = data['phone_of_transferee']
+            address.address_text = data['address_text']
+            address.state = data['state']
+            address.city = data['city']
+            address.save()
+            messages.success(request, "آدرس با موفقیت ویرایش شد")
+            return redirect('accounts:address_list')
+
+    else:
+        form = UserAddressForm(instance=address)
+    return render(request, 'accounts/address_edit.html', {'form': form})
