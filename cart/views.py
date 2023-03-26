@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from cart.forms import Add2CartForm
 from cart.utils.cart import Cart
 from shop.models import Product
-from django.views.decorators.http import require_POST
 
 
 def detail(request):
@@ -10,15 +9,17 @@ def detail(request):
     return render(request, template_name='cart/detail.html', context={'cart': cart})
 
 
-@require_POST
 def cart_add(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    form = Add2CartForm(request.POST)
+    if request.method == 'POST':
+        form = Add2CartForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            cart.add(product=product, quantity=data['quantity'])
+    elif request.method == 'GET':
+        cart.add(product=product, quantity=1)
 
-    if form.is_valid():
-        data = form.cleaned_data
-        cart.add(product=product, quantity=data['quantity'])
     return redirect('cart:detail')
 
 
