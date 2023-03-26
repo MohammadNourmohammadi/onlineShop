@@ -6,3 +6,4 @@ media/
 *.mo
 static/shop/images/
 onlineShop/passwords.py
+.DS_Store
