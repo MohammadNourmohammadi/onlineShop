@@ -1,15 +1,10 @@
 <!DOCTYPE html>
-<!--
-	ustora by freshdesignweb.com
-	Twitter: https://twitter.com/freshdesignweb
-	URL: https://www.freshdesignweb.com/ustora/
--->
-<html lang="en">
+<html lang="fa">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ustora Demo</title>
+    <title>Telond</title>
     
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -42,11 +37,15 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
-                            <li><a href="{% url 'cart:detail' %}"><i class="fa fa-user"></i> سبد خرید من</a></li>
-                            <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
-                            <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'accounts:logout' %}"><i class="fa fa-sign-out"></i> خروج از حساب کاربری</a></li>
+                                <li><a href="{% url 'accounts:address_list' %}"><i class="fa fa-list-ul" aria-hidden="true"></i>آدرس های من</a></li>
+                                <li><a href="{% url 'order:order_list' %}"><i class="fa fa-list"></i>سفارش های من</a></li>
+                            {% else %}
+                                <li><a href="{% url 'accounts:login' %}"><i class="fa fa-sign-in"></i> وارد یا ساخت حساب</a></li>
+                            {% endif %}
+                            <li><a href="{% url 'cart:detail' %}"><i class="fa fa-shopping-cart"></i> سبد خرید من</a></li>
+
                         </ul>
                     </div>
                 </div>
@@ -200,38 +199,40 @@
             </div>
         </div>
     </div> <!-- End promo area -->
-    
-    <div class="maincontent-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="latest-product">
-                        <h2 class="section-title">شکلات های خفن</h2>
-                        <div class="product-carousel">
-                            {% for chocolate in products %}
-                                 <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="{{ chocolate.image }}" alt="">
-                                        <div class="product-hover">
-                                            <a href="{% url 'cart:cart_add' chocolate.id %}" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> اضافه کردن به سبد</a>
-                                            <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> جزئیات محصول</a>
+    {% for category in categories %}
+        <div class="maincontent-area">
+            <div class="zigzag-bottom"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="latest-product">
+                            <h2 class="section-title">{{ category.name }}</h2>
+                            <div class="product-carousel">
+                                {% for product in category.products.all %}
+                                     <div class="single-product">
+                                        <div class="product-f-image">
+                                            <img src="{{ product.image }}" alt="">
+                                            <div class="product-hover">
+                                                <a href="{% url 'cart:cart_add' product.id %}" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> اضافه کردن به سبد</a>
+                                                <a href="{{ product.get_absolut_url }}" class="view-details-link"><i class="fa fa-link"></i> جزئیات محصول</a>
+                                            </div>
+                                        </div>
+
+                                        <h2><a href="single-product.html">{{ product.name }}</a></h2>
+
+                                        <div class="product-carousel-price">
+                                            <ins>{{ product.get_final_price }}T</ins> <del>{{ product.price }}T</del>
                                         </div>
                                     </div>
-
-                                    <h2><a href="single-product.html">{{ chocolate.name }}</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>{{ chocolate.get_final_price }}T</ins> <del>{{ chocolate.price }}T</del>
-                                    </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div> <!-- End main content area -->
+        </div> <!-- End main content area -->
+    {% endfor %}
+
     
     <div class="brands-area">
         <div class="zigzag-bottom"></div>
@@ -486,7 +487,6 @@
             </div>
         </div>
     </div> <!-- End footer bottom area -->
-   
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
     
