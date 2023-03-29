@@ -1,24 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {% block title-head %}
-        Login Page
-    {% endblock %}
+{% extends 'base.html' %}
 
+{% block content %}
     {% include 'messages.html' %}
+    <section >
+        <div class="container-fluid h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="/static/img/login_img.webp"
+                         class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <div>
 
-    {% block content %}
-        <form action="" method="post" novalidate>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" class="btn btn-primary" value="ورود">
-        </form>
-    {% endblock %}
-    <a href={% url 'accounts:register' %}>ثبت نام کنید</a>
-    <a href={% url 'accounts:password_reset' %}>رمز خود را فراموش کرده اید؟ </a>
-</body>
-</html>
+                        <div class="divider d-flex align-items-center my-4">
+                            <img class="center-block" src="/static/img/logo.png">
+                        </div>
+                        <form action="" method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="id_email">ایمیل</label>
+                                <input type="email" id="id_email" name="email" class="form-control form-control-lg"
+                                       placeholder="ایمیل خود را وارد کنید" required/>
+                            </div>
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="id_password">رمز</label>
+                                <input type="password" id="id_password" name="password"
+                                       class="form-control form-control-lg"
+                                       placeholder="رمز خود را وارد کنید" required/>
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="ورود">
+                        </form>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'accounts:password_reset' %}" class="text-body">رمز خود را فراموش کرده
+                                اید؟</a>
+                        </div>
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                                <p class="small fw-bold mt-2 pt-1 mb-0">آیا کاربر جدید هستید؟<a href="{% url 'accounts:register' %}"
+                                                                                                class="link-danger">ثبت
+                                    نام</a>
+                                </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}
