@@ -1,53 +1,176 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% block title %}
-    سبد خرید
-{% endblock %}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{#{% block title %}#}
+{#    سبد خرید#}
+{#{% endblock %}#}
+{##}
+{#{% include 'messages.html' %}#}
+{##}
+{#{% block content %}#}
+{#    <table class="table table-striped table-dark">#}
+{#        <thead>#}
+{#        <tr>#}
+{#            <th scope="col">#</th>#}
+{#            <th scope="col">محصول</th>#}
+{#            <th scope="col">تعداد</th>#}
+{#            <th scope="col">قیمت واحد</th>#}
+{#            <th scope="col">مجموع قیمت</th>#}
+{#            <th scope="col">عملیات</th>#}
+{#        </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        {% for item in cart %}#}
+{##}
+{#            <tr>#}
+{#                <th scope="row">{{ forloop.counter }}</th>#}
+{#                <td>{{ item.product }}</td>#}
+{#                <td>{{ item.quantity }}</td>#}
+{#                <td>{{ item.price }} تومان </td>#}
+{#                <td>{{ item.total_price }}تومان </td>#}
+{#                <td>#}
+{#                    <a href="{% url 'cart:cart_remove' item.product.id %}" class="btn btn-warning">حذف</a>#}
+{#                </td>#}
+{#            </tr>#}
+{##}
+{#        {% endfor %}#}
+{#        <tr>#}
+{#            <td>مجموع</td>#}
+{#            <td colspan="4"></td>#}
+{#            <td>{{ cart.get_total_price }} تومان</td>#}
+{#        </tr>#}
+{#        </tbody>#}
+{#    </table>#}
+{##}
+{#    <a href="{% url 'shop:index' %}">رفتن به صفحه اصلی</a>#}
+{#    <a href="{% url 'order:order_create' %}" class="btn btn-primary">ساخت فاکتور و پرداخت</a>#}
+{#{% endblock %}#}
+{#</body>#}
+{#</html>#}
 
-{% include 'messages.html' %}
+{% extends 'base.html' %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+{% endblock %}
 
 {% block content %}
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">محصول</th>
-            <th scope="col">تعداد</th>
-            <th scope="col">قیمت واحد</th>
-            <th scope="col">مجموع قیمت</th>
-            <th scope="col">عملیات</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in cart %}
+    {% include 'messages.html' %}
 
-            <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ item.product }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>{{ item.price }} تومان </td>
-                <td>{{ item.total_price }}تومان </td>
-                <td>
-                    <a href="{% url 'cart:cart_remove' item.product.id %}" class="btn btn-warning">حذف</a>
-                </td>
-            </tr>
+    <section class="h-100 h-custom" style="background-color: #d2c9ff;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12">
+                    <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                        <div class="card-body p-0">
+                            <div class="row g-0">
+                                <div class="col-lg-8">
+                                    <div class="p-5">
+                                        <div class="d-flex justify-content-between align-items-center mb-5">
+                                            <h1 class="fw-bold mb-0 text-black">سبد خرید</h1>
+                                            <h6 class="mb-0 text-muted">تعداد آیتم ها {{ cart.size_cart }}</h6>
+                                        </div>
+                                        <hr class="my-4">
 
-        {% endfor %}
-        <tr>
-            <td>مجموع</td>
-            <td colspan="4"></td>
-            <td>{{ cart.get_total_price }} تومان</td>
-        </tr>
-        </tbody>
-    </table>
+                                        {% for item in cart %}
+                                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                                    <img
+                                                            src="{{ item.product.image.url }}"
+                                                            class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                                    <h3 class="text-black mb-0">{{ item.product.name }}</h3>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                                    <button class="btn btn-link px-2"
+                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                        <i class="fa fa-minus"></i>
+                                                    </button>
 
-    <a href="{% url 'shop:index' %}">رفتن به صفحه اصلی</a>
-    <a href="{% url 'order:order_create' %}" class="btn btn-primary">ساخت فاکتور و پرداخت</a>
+                                                    <input id="form1" min="0" name="quantity" value="{{ item.quantity }}" type="number"
+                                                           class="form-control form-control-sm"/>
+
+                                                    <button class="btn btn-link px-2"
+                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                                    <h6 class="mb-0">قیمت واحد= {{ item.price }} تومان </h6>
+                                                    <h6 class="mb-0">مجموع قیمت= {{ item.total_price }} تومان </h6>
+                                                </div>
+                                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                                    <a href="{% url 'cart:cart_remove' item.product.id %}" class="text-muted"><i class="fa fa-times"></i></a>
+                                                </div>
+                                            </div>
+
+                                            <hr class="my-4">
+                                        {% endfor %}
+
+                                        <div class="pt-5">
+                                            <h6 class="mb-0"><a href="{% url 'shop:index' %}" class="text-body"><i
+                                                    class="fas fa-long-arrow-alt-left me-2"></i>بازگشت به صفحه اصلی</a></h6>
+                                        </div>
+                                        <div class="pt-5">
+                                            <h4 class="mb-0"><a href="{% url 'accounts:create_Address' %}" class="text-body"><i
+                                                    class="fas fa-long-arrow-alt-left me-2"></i>ساختن یک آدرس جدید</a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 bg-grey">
+                                    <div class="p-5">
+                                        <h3 class="fw-bold mb-5 mt-2 pt-1">خلاصه سبد</h3>
+                                        <hr class="my-4">
+
+                                        <div class="d-flex justify-content-between mb-4">
+                                            <h5 class="text-uppercase">تعداد آیتم ها: {{ cart.size_cart }} </h5>
+                                            <h5>مجموع قیمت کل سبد: {{ cart.get_total_price }} تومان</h5>
+                                        </div>
+
+{#                                        <h5 class="text-uppercase mb-3">Shipping</h5>#}
+{##}
+{#                                        <div class="mb-4 pb-2">#}
+{#                                            <select class="select">#}
+{#                                                <option value="1">Standard-Delivery- €5.00</option>#}
+{#                                                <option value="2">Two</option>#}
+{#                                                <option value="3">Three</option>#}
+{#                                                <option value="4">Four</option>#}
+{#                                            </select>#}
+{#                                        </div>#}
+
+{#                                        <h5 class="text-uppercase mb-3">Give code</h5>#}
+{##}
+{#                                        <div class="mb-5">#}
+{#                                            <div class="form-outline">#}
+{#                                                <input type="text" id="form3Examplea2"#}
+{#                                                       class="form-control form-control-lg"/>#}
+{#                                                <label class="form-label" for="form3Examplea2">Enter your code</label>#}
+{#                                            </div>#}
+{#                                        </div>#}
+
+                                        <hr class="my-4">
+
+                                        <div class="d-flex justify-content-between mb-5">
+                                            <h3 class="text-uppercase">قیمت نهایی</h3>
+                                            <h5>{{ cart.get_total_price }} تومان</h5>
+                                        </div>
+                                        <a href="{% url 'order:order_create' %}">
+                                        <button type="button" class="btn btn-dark btn-block btn-lg"
+                                                data-mdb-ripple-color="dark">ساخت فاکتور و پرداخت
+                                        </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
-</body>
-</html>

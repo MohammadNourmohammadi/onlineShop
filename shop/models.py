@@ -41,7 +41,7 @@ class Product(models.Model):
         return self.name
 
     def get_final_price(self):
-        return self.price * (100 - self.discount) // 100
+        return int(self.price * (100 - self.discount) // 100)
 
     def get_absolut_url(self):
         return reverse('shop:product_detail', args={self.slug, })

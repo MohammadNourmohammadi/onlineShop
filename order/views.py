@@ -1,15 +1,10 @@
 from django.contrib import messages
-from django.http import HttpResponse, Http404
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views import generic
-from accounts.forms import ChoiceUserAddressForm
 from delivery.views import create_delivery_pack
 from accounts.models import UserAddress
-# Create your views here.
-from django.views.decorators.http import require_POST
-from django.utils import timezone
-# from suds import Client
 from cart.utils.cart import Cart
 from order.models import Order, OrderItem
 
@@ -27,7 +22,7 @@ def order_create(request):
     for item in cart:
         OrderItem.objects.create(order=order, product=item['product'], quantity=item['quantity'])
     cart.clear()
-    return redirect('order:detail', order.id)
+    return redirect('order:order_list')
 
 
 class OrderDetailView(generic.DetailView):
@@ -57,7 +52,7 @@ def payment(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     if order.user != request.user:
         raise Http404
-    if 'address' not  in request.POST:
+    if 'address' not in request.POST:
         messages.error(request, 'آدرس باید انتخاب شود', 'danger')
         return redirect('order:order_list')
     address = get_object_or_404(UserAddress, pk=request.POST['address'])
