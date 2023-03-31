@@ -1,13 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <p3>اسم آدرس: {{ address.name }}</p3> <br>
-    <p3> نام تحویل گیرنده: {{ address.name_of_transferee }}</p3> <br>
-    <p4> آدرس: {{ address.address_text }}</p4>
 
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <section >
+        <div class="container-fluid h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="/static/img/login_img.webp"
+                         class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <div dir="rtl">
+                        <div class="divider d-flex align-items-center my-4">
+                            <img class="center-block" src="/static/img/logo.png">
+                        </div>
+                            <div class="form-outline mb-4" style="background-color: #bfd6f6">
+                                <h4>اسم آدرس</h4>
+                                <p>{{ address.name }}</p>
+                            </div>
+
+                            <div class="form-outline mb-4" style="background-color: #bfd6f6">
+                                <h4>کد پستی</h4>
+                                <p>{{ address.zip_code }}</p>
+                            </div>
+
+                            <div class="form-outline mb-4" style="background-color: #bfd6f6">
+                                <h4>آدرس</h4>
+                                <p>{{ address.address_text }}</p>
+                            </div>
+
+                            <div class="form-outline mb-4" style="background-color: #bfd6f6">
+                                <h4>نام تحویل گیرنده</h4>
+                                <p>{{ address.name_of_transferee}}</p>
+                            </div>
+
+                            <div class="form-outline mb-4" style="background-color: #bfd6f6">
+                                <h4>تلفن همراه تحویل گیرمده</h4>
+                                <p>{{ address.phone_of_transferee }}</p>
+                            </div>
+
+                            <div class="form-outline mb-4" style="background-color: #bfd6f6">
+                                <h4>استان</h4>
+                                <p>{{ address.state}}</p>
+                            </div>
+
+                            <div class="form-outline mb-4" style="background-color: #bfd6f6">
+                                <h4>شهر</h4>
+                                <p>{{ address.city}}</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}

@@ -1,16 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {% block content %}
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" class="btn btn-primary" value="ویرایش آدرس">
-        </form>
-    {% endblock %}
-</body>
-</html>
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <section >
+        <div class="container-fluid h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="/static/img/login_img.webp"
+                         class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <div dir="rtl">
+
+                        <div class="divider d-flex align-items-center my-4">
+                            <img class="center-block" src="/static/img/logo.png">
+                        </div>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="id_name">اسم آدرس</label>
+                                <input type="text" id="id_name" name="name" class="form-control form-control-lg"
+                                       value="{{ address.name }}" maxlength="30" required/>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="id_zip_code">کد پستی</label>
+                                <input type="text" id="id_zip_code" name="zip_code" class="form-control form-control-lg"
+                                       value="{{ address.zip_code }}" maxlength="10" required/>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="id_address_text">آدرس</label>
+                                <input type="text" id="id_address_text" name="address_text" class="form-control form-control-lg"
+                                       value="{{ address.address_text }}" maxlength="100" required/>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="id_name_of_transferee">نام دریافت کننده</label>
+                                <input type="text" id="id_name_of_transferee" name="name_of_transferee" class="form-control form-control-lg"
+                                        value="{{ address.name_of_transferee }}" maxlength="20" required/>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="id_phone_of_transferee">تلفن همراه دریافت کننده</label>
+                                <input type="text" id="id_phone_of_transferee" name="phone_of_transferee" class="form-control form-control-lg"
+                                        value="{{ address.phone_of_transferee }}" maxlength="11" required/>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="id_state">استان</label>
+                                <input type="text" id="id_state" name="state" class="form-control form-control-lg"
+                                       value="{{ address.state }}" maxlength="30" required/>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="id_city">شهر</label>
+                                <input type="text" id="id_city" name="city" class="form-control form-control-lg"
+                                       value="{{ address.city }}" maxlength="30" required/>
+                            </div>
+
+                            <input type="submit" class="btn btn-primary" value="ویرایش آدرس">
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}>
