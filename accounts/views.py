@@ -147,6 +147,4 @@ def edit_address(request, pk):
             messages.success(request, "آدرس با موفقیت ویرایش شد")
             return redirect('accounts:address_list')
 
-    else:
-        form = UserAddressForm(instance=address)
-    return render(request, 'accounts/address_edit.html', {'form': form})
+    return render(request, 'accounts/address_edit.html', {'address': address})
