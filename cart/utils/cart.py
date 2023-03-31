@@ -15,7 +15,7 @@ class Cart:
         for product in products:
             cart[str(product.id)]['product'] = product
         for item in cart.values():
-            item['total_price'] = int(item['price']) * int(item['quantity'])
+            item['total_price'] = int(int(item['price']) * int(item['quantity']))
             yield item
 
     def add_cart_session(self):
@@ -28,7 +28,7 @@ class Cart:
         product_id = str(product.id)
 
         if product_id not in self.cart:
-            self.cart[product_id] = {'quantity': 0, 'price': str(product.price)}
+            self.cart[product_id] = {'quantity': 0, 'price': product.get_final_price()}
 
         self.cart.get(product_id)['quantity'] += quantity
         self.save()

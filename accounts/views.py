@@ -22,6 +22,9 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'با موفقیت وارد شدید', 'success')
+                nxt = request.GET.get("next", None)
+                if nxt:
+                    return redirect(nxt)
                 return redirect('shop:index')
             else:
                 messages.error(request, 'ایمیل یا رمز اشتباه است', 'danger')
