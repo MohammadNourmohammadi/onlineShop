@@ -12,6 +12,7 @@ class Order(models.Model):
     is_paid = models.BooleanField(default=False)
     address = models.ForeignKey(UserAddress, related_name='order_addresses', on_delete=models.SET_NULL, null=True)
     authority = models.CharField(max_length=100, null=True)
+    post_cost = models.IntegerField(default=0)
 
     class Meta:
         ordering = ('created',)
@@ -21,7 +22,7 @@ class Order(models.Model):
 
     @property
     def get_total_price(self):
-        total = sum(item.get_cost() for item in self.items.all())
+        total = sum(item.get_cost() for item in self.items.all()) + self.post_cost
         return total
 
 
