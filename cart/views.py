@@ -28,3 +28,20 @@ def cart_remove(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
     return redirect('cart:detail')
+
+
+def cart_minus(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    if cart.cart[str(product_id)]['quantity'] - 1 <= 0:
+        cart.remove(product)
+        return redirect('cart:detail')
+    cart.add(product, -1)
+    return redirect('cart:detail')
+
+
+def cart_plus(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    cart.add(product, 1)
+    return redirect('cart:detail')

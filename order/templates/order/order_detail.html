@@ -1,16 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-<ul>
-    {% for item in order.items.all %}
-         <P>{{ item.product.name }} {{ item.quantity }}</P>
-    {% endfor %}
-</ul>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block extra_css %}
+    <link rel="stylesheet" href="/static/css/factor.css">
+{% endblock %}
+
+{% block content %}
+    <section style="min-height: 500px">
+        <h2>محصولات</h2>
+
+        <table>
+            <tr>
+                <th>#</th>
+                <th>نام محصول</th>
+                <td>قیمت(تومان)</td>
+                <td>تعداد</td>
+                <td>قیمت کل(تومان)</td>
+            </tr>
+            {% for item in order.items.all %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.get_final_price }}</td>
+                    <td> {{ item.quantity }} </td>
+                    <td> {{ item.get_cost }} </td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td>هزینه پست (تومان)</td>
+                <td>{{ order.post_cost }}</td>
+            </tr>
+            <tr>
+                <td>قیمت کل سفارش (تومان)</td>
+                <td>{{ order.get_total_price }}</td>
+            </tr>
+        </table>
+
+    </section>
+
+
+{% endblock %}

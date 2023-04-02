@@ -7,9 +7,10 @@ from delivery.views import create_delivery_pack
 from accounts.models import UserAddress
 from cart.utils.cart import Cart
 from order.models import Order, OrderItem
+from django.views.decorators.http import require_POST
 
 
-@login_required()
+@require_POST
 def order_create(request):
     cart = Cart(request)
     if cart.size_cart() == 0:
@@ -19,6 +20,9 @@ def order_create(request):
         messages.error(request, 'نمی توان بیشتر از ۵ تا سفارش باز داشت', 'danger')
         return redirect('order:order_list')
     order = Order.objects.create(user=request.user)
+    if cart.get_total_price() < 300000:
+        order.post_cost = 20000 if request.POST['post_method'] == 'post_tehran' else 30000
+        order.save()
     for item in cart:
         OrderItem.objects.create(order=order, product=item['product'], quantity=item['quantity'])
     cart.clear()
