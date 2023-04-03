@@ -26,6 +26,7 @@ def order_create(request):
     for item in cart:
         OrderItem.objects.create(order=order, product=item['product'], quantity=item['quantity'])
     cart.clear()
+    messages.success(request, 'فاکتور شما ساخته شد و آماده پرداخت می باشد.', 'success')
     return redirect('order:order_list')
 
 

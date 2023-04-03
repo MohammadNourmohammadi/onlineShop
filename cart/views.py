@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from cart.forms import Add2CartForm
 from cart.utils.cart import Cart
@@ -17,6 +18,7 @@ def cart_add(request, product_id):
         if form.is_valid():
             data = form.cleaned_data
             cart.add(product=product, quantity=data['quantity'])
+            messages.success(request, 'محصول به سبد شما اضافه شد.', 'success')
     elif request.method == 'GET':
         cart.add(product=product, quantity=1)
 
@@ -27,6 +29,7 @@ def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
+    messages.success(request, 'محصول از سبد شما حذف شد.', 'success')
     return redirect('cart:detail')
 
 

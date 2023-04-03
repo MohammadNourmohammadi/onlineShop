@@ -91,6 +91,7 @@ def create_address(request):
                                                  state=data['state'], address_text=data['address_text'],
                                                  zip_code=data['zip_code'])
             address.save()
+            messages.success(request, 'آدرس با موفقیت ساخته شد.', 'success')
             return redirect('accounts:address_list')
 
     else:
