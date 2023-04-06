@@ -8,6 +8,7 @@ from accounts.models import UserAddress
 from cart.utils.cart import Cart
 from order.models import Order, OrderItem
 from django.views.decorators.http import require_POST
+from order.sms_service import send_sms_success_payment
 
 
 @require_POST
@@ -66,6 +67,7 @@ def payment(request, order_id):
     order.address = address
     order.save()
     create_delivery_pack(order)
+    send_sms_success_payment(order)
     context = {'user': request.user, 'price': order.get_total_price, 'address': request.POST['address']}
     return render(request, 'order/payment.html', context)
 
