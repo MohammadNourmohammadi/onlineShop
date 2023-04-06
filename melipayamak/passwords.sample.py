@@ -1,0 +1,3 @@
+SMS_USER = ''
+SMS_PASS = ''
+SMS_FROM_NUMBER = ''

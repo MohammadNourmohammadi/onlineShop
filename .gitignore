@@ -7,3 +7,4 @@ media/
 static/shop/images/
 onlineShop/passwords.py
 .DS_Store
+melipayamak/passwords.py
