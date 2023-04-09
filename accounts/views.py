@@ -50,7 +50,7 @@ def register(request):
                                                   phone_number=data['phone_number'], )
                 login(request, user)
                 messages.success(request, 'با موفقیت ثبت نام شدید', 'success')
-                email_service.welcome_email_new_user(user)
+                email_service.welcome_email_new_user.delay(user.email, user.first_name)
                 return redirect('shop:index')
             else:
                 messages.error(request, 'رمز ها یکسان نیستند', 'danger')

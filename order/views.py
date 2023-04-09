@@ -67,7 +67,7 @@ def payment(request, order_id):
     order.address = address
     order.save()
     create_delivery_pack(order)
-    send_sms_success_payment(order)
+    send_sms_success_payment.delay(order.address.phone_of_transferee, order.address.name_of_transferee)
     context = {'user': request.user, 'price': order.get_total_price, 'address': request.POST['address']}
     return render(request, 'order/payment.html', context)
 

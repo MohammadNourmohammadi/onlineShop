@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 from pathlib import Path
 import os
-from onlineShop.passwords import EMAIL_PASS, POSTGRES_PASS
+from onlineShop.passwords import EMAIL_PASS, POSTGRES_PASS, RABBIT_MQ_PASS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'cart',
     'order',
     'delivery',
+    'djcelery_email',
 ]
 
 MIDDLEWARE = [
@@ -132,10 +133,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.MyUser'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = '2022nourmohammadi@gmail.com'
 EMAIL_HOST_PASSWORD = EMAIL_PASS
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+
+CELERY_BROKER_URL = f'amqp://Mohammad:{RABBIT_MQ_PASS}@localhost'
