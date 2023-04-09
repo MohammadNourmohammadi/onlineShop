@@ -1,2 +1,3 @@
 EMAIL_PASS = ''
 POSTGRES_PASS = ''
+RABBIT_MQ_PASS = ''
