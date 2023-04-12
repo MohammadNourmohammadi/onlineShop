@@ -7,3 +7,4 @@ asyncio==3.4.3
 zeep==4.2.1
 celery==5.2.7
 django-celery-email==3.0.0
+django-prometheus==2.2.0
