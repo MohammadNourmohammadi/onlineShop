@@ -23,5 +23,6 @@ urlpatterns = [
     path('cart/', include('cart.urls')),
     path('order/', include('order.urls')),
     path('delivery/', include('delivery.urls')),
+    path('', include('django_prometheus.urls')),
 
 ]

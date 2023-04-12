@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     'order',
     'delivery',
     'djcelery_email',
+    'django_prometheus',
 ]
 
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
 ROOT_URLCONF = 'onlineShop.urls'
@@ -80,7 +83,7 @@ WSGI_APPLICATION = 'onlineShop.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "ENGINE": "django_prometheus.db.backends.postgresql",
         "NAME": "telonddb",
         "USER": 'mohammad',
         "PASSWORD": POSTGRES_PASS,
@@ -141,6 +144,5 @@ EMAIL_HOST_PASSWORD = EMAIL_PASS
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-
 
 CELERY_BROKER_URL = f'amqp://Mohammad:{RABBIT_MQ_PASS}@localhost'
