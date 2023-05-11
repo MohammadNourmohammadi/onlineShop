@@ -49,7 +49,10 @@
 
                     <div class="product-carousel-price">
                         <ins>{{ product.get_final_price }}T</ins>
-                        <del>{{ product.price }}T</del>
+                        {% if product.discount %}
+                            <del>{{ product.price }}T</del>
+                        {% endif %}
+
                     </div>
                 </div>
             {% endfor %}
