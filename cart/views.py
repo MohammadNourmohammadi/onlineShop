@@ -21,7 +21,10 @@ def cart_add(request, product_id):
             messages.success(request, 'محصول به سبد شما اضافه شد.', 'success')
     elif request.method == 'GET':
         cart.add(product=product, quantity=1)
-
+        messages.success(request, 'محصول به سبد شما اضافه شد.', 'success')
+    ref = request.META.get('HTTP_REFERER')
+    if ref:
+        return redirect(ref)
     return redirect('cart:detail')
 
 

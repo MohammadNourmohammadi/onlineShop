@@ -24,6 +24,8 @@ def user_login(request):
                 messages.success(request, 'با موفقیت وارد شدید', 'success')
                 nxt = request.GET.get("next", None)
                 if nxt:
+                    if nxt == '/order/create/':
+                        return redirect('cart:detail')
                     return redirect(nxt)
                 return redirect('shop:index')
             else:
