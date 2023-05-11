@@ -29,3 +29,5 @@ server {
         alias /Users/mohammad/Desktop/onlineShop/static/;
   }
 }
+
+nginx willnload all files in /opt/homebrew/etc/nginx/servers/.
