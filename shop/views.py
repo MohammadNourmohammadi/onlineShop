@@ -27,3 +27,8 @@ class ProductDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = Add2CartForm()
         return context
+
+
+class CategoryDetailView(generic.DetailView):
+    context_object_name = 'category'
+    model = Category

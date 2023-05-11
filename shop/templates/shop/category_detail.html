@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+    <style>
+        body {
+            background-color: #E6F1F6;
+        }
+
+        .product-card {
+            background-color: #A8D6E0;
+        }
+
+        .discount {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for product in category.products.all %}
+                {#                <div class="col product-card">#}
+                {#                    <div class="card">#}
+                {#                        <img src="{{ product.image.url }}" alt="{{ product.name }}">#}
+                {#                        <div class="card-body">#}
+                {#                            <h5 class="card-title">{{ product.name }} </h5>#}
+                {#                            <p class="card-text">قیمت: {{ product.price }} تومان</p>#}
+                {#                            {% if product.discount %}#}
+                {#                                <p class="card-text discount">تخفیف: {{ product.discount }}%</p>#}
+                {#                            {% endif %}#}
+                {#                            <button class="btn btn-primary"><i class="fas fa-cart-plus"></i> اضافه به سبد خرید</button>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </div>#}
+                <div class="single-product">
+                    <div class="product-f-image">
+                        <img src="{{ product.image.url }}" alt="">
+                        <div class="product-hover">
+                            <a href="{% url 'cart:cart_add' product.id %}" class="add-to-cart-link"><i
+                                    class="fa fa-shopping-cart"></i> اضافه کردن به سبد</a>
+                            <a href="{{ product.get_absolut_url }}" class="view-details-link"><i
+                                    class="fa fa-link"></i> جزئیات محصول</a>
+                        </div>
+                    </div>
+
+                    <h2><a href="single-product.html">{{ product.name }}</a></h2>
+
+                    <div class="product-carousel-price">
+                        <ins>{{ product.get_final_price }}T</ins>
+                        <del>{{ product.price }}T</del>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
