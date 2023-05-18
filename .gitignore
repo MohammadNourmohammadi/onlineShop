@@ -8,4 +8,4 @@ static/shop/images/
 onlineShop/passwords.py
 .DS_Store
 melipayamak/passwords.py
-staticfiles/shop/images
+staticfiles/shop/images/
