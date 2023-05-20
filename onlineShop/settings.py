@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-b7r-e3pnz$c2@kcbihqh*^xq5j!u)pn01ua%4oyc*-=r7v!n7!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'telond.ir']
 
 # Application definition
 
@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Tehran'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -145,5 +145,11 @@ EMAIL_HOST_PASSWORD = EMAIL_PASS
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = ['telond.ir']
+CSRF_COOKIE_DOMAIN = 'telond.ir'
+CSRF_TRUSTED_ORIGINS = ['https://telond.ir']
 
 CELERY_BROKER_URL = f'amqp://Mohammad:{RABBIT_MQ_PASS}@localhost'
