@@ -20,3 +20,7 @@ log-gunicorn:
 	sudo vim /var/log/gunicorn/dev.log
 collect-static:
 	python manage.py collectstatic
+run-celery-worker:
+	celery -A onlineShop worker --loglevel=INFO >> /root/celery.log 2>&1 &
+stop-celery-worker:
+	killall -9 celery
