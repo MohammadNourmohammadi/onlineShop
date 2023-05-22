@@ -155,5 +155,5 @@ CSRF_TRUSTED_ORIGINS = ['https://telond.ir']
 CELERY_BROKER_URL = f'amqp://Mohammad:{RABBIT_MQ_PASS}@localhost'
 
 MERCHANT = MERCHANT_TELOND
-SANDBOX = True
+SANDBOX = False
 
