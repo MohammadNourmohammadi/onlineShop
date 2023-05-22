@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 from pathlib import Path
 import os
-from onlineShop.passwords import EMAIL_PASS, POSTGRES_PASS, RABBIT_MQ_PASS
+from onlineShop.passwords import EMAIL_PASS, POSTGRES_PASS, RABBIT_MQ_PASS, MERCHANT_TELOND
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -153,3 +153,7 @@ CSRF_COOKIE_DOMAIN = 'telond.ir'
 CSRF_TRUSTED_ORIGINS = ['https://telond.ir']
 
 CELERY_BROKER_URL = f'amqp://Mohammad:{RABBIT_MQ_PASS}@localhost'
+
+MERCHANT = MERCHANT_TELOND
+SANDBOX = True
+

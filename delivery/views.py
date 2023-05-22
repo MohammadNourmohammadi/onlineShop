@@ -6,13 +6,13 @@ from django.http import Http404
 from .forms import PostDeliveryForm
 
 
-def create_delivery_pack(order: Order):
+def create_delivery_pack(order: Order, ref_id):
     delivery_pack = DeliveryPack.objects.create(user=order.user, zip_code=order.address.zip_code,
                                                 address_text=order.address.address_text,
                                                 name_of_transferee=order.address.name_of_transferee,
                                                 phone_of_transferee=order.address.phone_of_transferee,
                                                 state=order.address.state, city=order.address.city,
-                                                authority=order.authority, order=order)
+                                                authority=order.authority, order=order, ref_id=ref_id)
     delivery_pack.save()
 
 

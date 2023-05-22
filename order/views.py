@@ -9,6 +9,7 @@ from cart.utils.cart import Cart
 from order.models import Order, OrderItem
 from django.views.decorators.http import require_POST
 from order.sms_service import send_sms_success_payment
+from .zarinpal import send_request, verify_pay
 
 
 @require_POST
@@ -62,14 +63,36 @@ def payment(request, order_id):
         messages.error(request, 'آدرس باید انتخاب شود', 'danger')
         return redirect('order:order_list')
     address = get_object_or_404(UserAddress, pk=request.POST['address'])
-    order.is_paid = True
-    order.authority = "Mohammad is king"
-    order.address = address
-    order.save()
-    create_delivery_pack(order)
-    send_sms_success_payment.delay(order.address.phone_of_transferee, order.address.name_of_transferee)
-    context = {'user': request.user, 'price': order.get_total_price, 'address': request.POST['address']}
-    return render(request, 'order/payment.html', context)
+    response = send_request(order.get_total_price, "خرید از سایت تلوند")
+    if response['status']:
+        order.authority = response['authority']
+        order.address = address
+        order.save()
+        return redirect(response['url'])
+    messages.error(request, 'پرداخت با موفقیت انجام نشد لطفا دوباره تلاش کنید', 'danger')
+    print(response['code'])
+    return redirect('order:order_list')
+    # order.is_paid = True
+    # create_delivery_pack(order)
+    # send_sms_success_payment.delay(order.address.phone_of_transferee, order.address.name_of_transferee)
+    # context = {'user': request.user, 'price': order.get_total_price, 'address': request.POST['address']}
+    # return render(request, 'order/payment.html', context)
+
+
+def verify(request):
+    if 'Authority' not in request.GET:
+        raise Http404
+    auth = request.GET['Authority']
+    order = get_object_or_404(Order, authority=auth)
+    response = verify_pay(auth, order.get_total_price)
+    if response['status']:
+        order.is_paid = True
+        order.save()
+        create_delivery_pack(order, response['RefID'])
+        send_sms_success_payment.delay(order.address.phone_of_transferee, order.address.name_of_transferee)
+    else:
+        print(response['code'])
+    return redirect('order:order_list')  # todo
 
 
 @login_required()
