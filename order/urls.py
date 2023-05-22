@@ -10,5 +10,6 @@ urlpatterns = [
     path('', login_required(views.OrderListView.as_view()), name='order_list'),
     path('payment/<int:order_id>/', views.payment, name='payment'),
     path('delete/<int:pk>', views.delete_order, name='delete_order'),
+    path('verify/', views.verify, name='verify')
 
 ]
