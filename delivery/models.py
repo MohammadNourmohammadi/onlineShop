@@ -17,7 +17,7 @@ class DeliveryPack(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='delivery_pack')
     created = models.DateTimeField(default=timezone.now)
     authority = models.CharField(max_length=100)
-    ref_id = models.IntegerField(default=0)
+    ref_id = models.CharField(max_length=30)
 
     class Meta:
         ordering = ('-created',)
