@@ -92,7 +92,7 @@ def verify(request):
         send_sms_success_payment.delay(order.address.phone_of_transferee, order.address.name_of_transferee)
     else:
         print(response['code'])
-    return redirect('order:order_list')  # todo
+    return redirect('delivery:customer_list')
 
 
 @login_required()

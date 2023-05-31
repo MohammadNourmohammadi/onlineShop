@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 5px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #6cb0c5;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <td> نام تحویل گیرنده:</td>
+            <td> {{ delivery_pack.name_of_transferee }}</td>
+        </tr>
+        <tr>
+            <td>شماره تحویل گیرنده:</td>
+            <td> {{ delivery_pack.phone_of_transferee }}  </td>
+        </tr>
+        <tr>
+            <td>کد پستی:</td>
+            <td> {{ delivery_pack.zip_code }}</td>
+        </tr>
+        <tr>
+            <td>استان:</td>
+            <td> {{ delivery_pack.state }}   </td>
+        </tr>
+        <tr>
+            <td>شهر:</td>
+            <td> {{ delivery_pack.city }} </td>
+        </tr>
+        <tr>
+            <td>شماره تحویل گیرنده:</td>
+            <td>{{ delivery_pack.phone_of_transferee }} </td>
+        </tr>
+        {#    <tr>#}
+        {#        <td> شناسه پرداخت:</td>#}
+        {#        <td> {{ delivery_pack.authority }} </td>#}
+        {#    </tr>#}
+        <tr>
+            <td>تحویل پست داده شده؟:</td>
+            <td> {{ delivery_pack.is_post_delivered }} </td>
+        </tr>
+        {#    <tr>#}
+        {#        <td>کد رهگیری پست</td>#}
+        {#        <td> {{ delivery_pack.post_tracking_code }} </td>#}
+        {#    </tr>#}
+    </table>
+
+    <h2>محصولات</h2>
+
+    <table>
+        <tr>
+            <th>#</th>
+            <th>نام محصول</th>
+            <td>قیمت</td>
+            <td>تعداد</td>
+            <td>قیمت کل</td>
+        </tr>
+        {% for item in delivery_pack.order.items.all %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.get_final_price }}</td>
+                <td> {{ item.quantity }} </td>
+                <td> {{ item.get_cost }} </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>قیمت کل سفارش</td>
+            <td>{{ delivery_pack.order.get_total_price }}</td>
+        </tr>
+    </table>
+
+{% endblock %}
