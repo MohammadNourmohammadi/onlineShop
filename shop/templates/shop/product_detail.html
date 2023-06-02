@@ -77,8 +77,8 @@
 
                                         <div class="product-carousel-price">
                                             <ins>{{ related_product.get_final_price }}T</ins>
-                                            {% if  product.discount %}
-                                                <del>{{ product.price }}T</del>
+                                            {% if  related_product.discount %}
+                                                <del>{{ related_product.price }}T</del>
                                             {% endif %}
                                         </div>
                                     </div>
