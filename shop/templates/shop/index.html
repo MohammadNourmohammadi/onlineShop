@@ -109,7 +109,7 @@
                             </a>
                             {#                            <h2 class="section-title">{{ category.name }}</h2>#}
                             <div class="product-carousel">
-                                {% for product in category.products.all %}
+                                {% for product in category.products.all|slice:":10" %}
                                     <div class="single-product">
                                         <div class="product-f-image">
                                             <img src="{{ product.image }}" alt="">
