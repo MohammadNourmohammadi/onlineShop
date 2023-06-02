@@ -38,9 +38,9 @@
                         <h5>
                             {{ product.description }}
                         </h5>
-                        <h5>تاریخ تولید {{ product.pro_date }}</h5>
-                        <h5>تاریخ انتقضا {{ product.exp_date }}</h5>
-                        <h5>کشور سازنده: {{ product.country_made }}</h5>
+{#                        <h5>تاریخ تولید {{ product.pro_date }}</h5>#}
+{#                        <h5>تاریخ انتقضا {{ product.exp_date }}</h5>#}
+{#                        <h5>کشور سازنده: {{ product.country_made }}</h5>#}
                         <form action="{% url 'cart:cart_add' product.id %}" method="post">
                             {% csrf_token %}
                             {{ form }}
@@ -60,7 +60,7 @@
                         <div class="latest-product">
                             <h2 class="section-title">محصولات مشابه</h2>
                             <div class="product-carousel">
-                                {% for related_product in category.products.all %}
+                                {% for related_product in category.products.all|slice:":10" %}
                                     <div class="single-product">
                                         <div class="product-f-image">
                                             <img src="{{ related_product.image.url }}" alt="">
@@ -73,7 +73,7 @@
                                             </div>
                                         </div>
 
-                                        <h2><a href="single-product.html">{{ related_product.name }}</a></h2>
+                                        <h2><a href="{{ related_product.get_absolut_url }}">{{ related_product.name }}</a></h2>
 
                                         <div class="product-carousel-price">
                                             <ins>{{ related_product.get_final_price }}T</ins>
