@@ -47,3 +47,18 @@ def delivery_pack_detail(request, pk):
         delivery_pack = get_object_or_404(DeliveryPack, pk=pk)
         return render(request, 'delivery/delivery_pack_detail.html', {'form': form,
                                                                       'delivery_pack': delivery_pack}, )
+
+
+class CustomerDeliveryPackListView(generic.ListView):
+    model = DeliveryPack
+    context_object_name = 'delivery_packs'
+    template_name = 'delivery/customer_delivery_list.html'
+
+    def get_queryset(self):
+        return DeliveryPack.objects.filter(user=self.request.user)
+
+
+class CustomerPackDetailView(generic.DetailView):
+    model = DeliveryPack
+    context_object_name = 'delivery_pack'
+    template_name = 'delivery/customer_pack_detail.html'

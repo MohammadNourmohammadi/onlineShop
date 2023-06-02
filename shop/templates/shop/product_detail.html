@@ -14,7 +14,7 @@
                                 {% for image in product.images.all %}
                                     <li>
                                         {{ image.url }}
-                                        <img src="{{image.image.url}}">
+                                        <img src="{{ image.image.url }}">
                                     </li>
                                 {% endfor %}
                             </ul>
@@ -26,7 +26,10 @@
                     <div dir="rtl">
                         <h1> {{ product.name }}</h1>
                         {% if product.price != product.get_final_price %}
-                            <h4>قیمت اصلی: <del>{{ product.price }}</del> تومان</h4>
+                            <h4>قیمت اصلی:
+                                <del>{{ product.price }}</del>
+                                تومان
+                            </h4>
                             <h4>قیمت با تخفیف: {{ product.get_final_price }} تومان</h4>
                         {% else %}
                             <h4>قیمت: {{ product.get_final_price }}</h4>
@@ -49,7 +52,7 @@
         </div>
     </div>
     {% for category in product.category.all %}
-        <div >
+        <div>
             <div class="zigzag-bottom"></div>
             <div class="container">
                 <div class="row">
@@ -58,19 +61,25 @@
                             <h2 class="section-title">محصولات مشابه</h2>
                             <div class="product-carousel">
                                 {% for related_product in category.products.all %}
-                                     <div class="single-product">
+                                    <div class="single-product">
                                         <div class="product-f-image">
                                             <img src="{{ related_product.image.url }}" alt="">
                                             <div class="product-hover">
-                                                <a href="{% url 'cart:cart_add' related_product.id %}" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> اضافه کردن به سبد</a>
-                                                <a href="{{ related_product.get_absolut_url }}" class="view-details-link"><i class="fa fa-link"></i> جزئیات محصول</a>
+                                                <a href="{% url 'cart:cart_add' related_product.id %}"
+                                                   class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> اضافه
+                                                    کردن به سبد</a>
+                                                <a href="{{ related_product.get_absolut_url }}"
+                                                   class="view-details-link"><i class="fa fa-link"></i> جزئیات محصول</a>
                                             </div>
                                         </div>
 
                                         <h2><a href="single-product.html">{{ related_product.name }}</a></h2>
 
                                         <div class="product-carousel-price">
-                                            <ins>{{ related_product.get_final_price }}T</ins> <del>{{ related_product.price }}T</del>
+                                            <ins>{{ related_product.get_final_price }}T</ins>
+                                            {% if  related_product.discount %}
+                                                <del>{{ related_product.price }}T</del>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -83,16 +92,16 @@
 
     {% endfor %}
 
-{#    <p>category: {{ product.category }}</p>#}
-{#    <p>name: {{ product.name }}</p>#}
-{#    <p>image: <img src="{{ product.image.url }}" alt="chocolate image"></p>#}
-{#    <p>description: {{ product.description }}</p>#}
-{#    <p>real price: {{ product.price }}</p>#}
-{#    <p>تخفیف: ٪{{ product.discount }}</p>#}
-{##}
-{#    <form action="{% url 'cart:cart_add' product.id %}" method="post">#}
-{#        {% csrf_token %}#}
-{#        {{ form }}#}
-{#        <input type="submit" class="btn btn-primary" value="اضافه کردن به سبد">#}
-{#    </form>#}
+    {#    <p>category: {{ product.category }}</p>#}
+    {#    <p>name: {{ product.name }}</p>#}
+    {#    <p>image: <img src="{{ product.image.url }}" alt="chocolate image"></p>#}
+    {#    <p>description: {{ product.description }}</p>#}
+    {#    <p>real price: {{ product.price }}</p>#}
+    {#    <p>تخفیف: ٪{{ product.discount }}</p>#}
+    {##}
+    {#    <form action="{% url 'cart:cart_add' product.id %}" method="post">#}
+    {#        {% csrf_token %}#}
+    {#        {{ form }}#}
+    {#        <input type="submit" class="btn btn-primary" value="اضافه کردن به سبد">#}
+    {#    </form>#}
 {% endblock %}
