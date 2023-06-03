@@ -63,7 +63,7 @@ def payment(request, order_id):
         messages.error(request, 'آدرس باید انتخاب شود', 'danger')
         return redirect('order:order_list')
     address = get_object_or_404(UserAddress, pk=request.POST['address'])
-    response = send_request(order.get_total_price, "خرید از سایت تلوند")
+    response = send_request(order.get_total_price, f"{request.user.last_name} سفارش ")
     if response['status']:
         order.authority = response['authority']
         order.address = address

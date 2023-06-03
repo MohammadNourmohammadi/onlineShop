@@ -1,6 +1,6 @@
 function updatePrice() {
     if (document.getElementById("post_tehran").checked == true) {
-        document.getElementById("final_price").innerText = Number(document.getElementById("cart_total_price").innerText) + 20000;
+        document.getElementById("final_price").innerText = Number(document.getElementById("cart_total_price").innerText) + 35000;
     } else {
         document.getElementById("final_price").innerText = Number(document.getElementById("cart_total_price").innerText)  + 30000;
     }

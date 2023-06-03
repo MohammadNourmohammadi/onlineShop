@@ -4,6 +4,7 @@ from .models import DeliveryPack
 from django.views import generic
 from django.http import Http404
 from .forms import PostDeliveryForm
+from .sms_delivery import send_sms_get_postman
 
 
 def create_delivery_pack(order: Order, ref_id):
@@ -37,6 +38,8 @@ def delivery_pack_detail(request, pk):
         delivery_pack = get_object_or_404(DeliveryPack, pk=pk)
         delivery_pack.post_tracking_code = request.POST['post_tracking_code']
         if 'is_post_delivered' in request.POST.keys():
+            if not delivery_pack.is_post_delivered:
+                send_sms_get_postman.delay(delivery_pack.phone_of_transferee, delivery_pack.name_of_transferee)
             delivery_pack.is_post_delivered = True
         else:
             delivery_pack.is_post_delivered = False

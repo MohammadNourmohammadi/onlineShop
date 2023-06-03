@@ -91,41 +91,45 @@
                                         <hr class="my-4">
 
                                         <div class="d-flex justify-content-between mb-4">
-                                            <h7> خرید بالای ۳۰۰ هزار تومان هزینه پست رایگان است</h7>
+                                            <h7> خرید بالای ۳۹۰ هزار تومان هزینه پست رایگان است</h7>
                                         </div>
+                                        <p style="background-color:Tomato;"><b> به علت گرمی هوا فعلا در شهر
+                                            تهران میتوانیم ارسال کنیم</b></p>
 
                                         <form action="{% url 'order:order_create' %}" method="post">
                                             {% csrf_token %}
                                             <div class="d-flex justify-content-between mb-4">
                                                 <h7></h7>
                                                 <h5>هزینه پست: </h5>
-                                                {% if cart.get_total_price >= 300000 %}
+
+                                                {% if cart.get_total_price >= 390000 %}
                                                     رایگان
                                                 {% else %}
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="post_method"
-                                                               id="post_tehran" value="post_tehran" onclick="updatePrice()">
+                                                               id="post_tehran" checked value="post_tehran"
+                                                               onclick="updatePrice()">
                                                         <label class="form-check-label" for="post_tehran">
-                                                            استان تهران: ۲۰ هزار تومان
+                                                            استان تهران: ۳۵ هزار تومان
                                                         </label>
                                                     </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="post_method"
-                                                               id="post_other" value="post_other" checked onclick="updatePrice()">
-                                                        <label class="form-check-label" for="post_other">
-                                                            بقیه شهر‌ها: ۳۰ هزار تومان
-                                                        </label>
-                                                    </div>
+                                                    {#                                                    <div class="form-check">#}
+                                                    {#                                                        <input class="form-check-input" type="radio" name="post_method"#}
+                                                    {#                                                               id="post_other" value="post_other" checked onclick="updatePrice()">#}
+                                                    {#                                                        <label class="form-check-label" for="post_other">#}
+                                                    {#                                                            بقیه شهر‌ها: ۳۰ هزار تومان#}
+                                                    {#                                                        </label>#}
+                                                    {#                                                    </div>#}
                                                 {% endif %}
                                             </div>
                                             <hr class="my-4">
 
                                             <div class="d-flex justify-content-between mb-5">
                                                 <h3 class="text-uppercase">قیمت نهایی (تومان)</h3>
-                                                {% if cart.get_total_price >= 300000 %}
+                                                {% if cart.get_total_price >= 390000 %}
                                                     <h5 id="final_price">{{ cart.get_total_price }}</h5>
                                                 {% else %}
-                                                    <h5 id="final_price">{{ cart.get_total_price|add:30000 }}</h5>
+                                                    <h5 id="final_price">{{ cart.get_total_price|add:35000 }}</h5>
                                                 {% endif %}
                                             </div>
 

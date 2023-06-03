@@ -1,8 +1,7 @@
-
 {% extends 'base.html' %}
 
 {% block content %}
-    <section >
+    <section>
         <div class="container-fluid h-custom">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-9 col-lg-6 col-xl-5">
@@ -31,32 +30,37 @@
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="id_address_text">آدرس</label>
-                                <input type="text" id="id_address_text" name="address_text" class="form-control form-control-lg"
+                                <input type="text" id="id_address_text" name="address_text"
+                                       class="form-control form-control-lg"
                                        placeholder="آدرس خود را دقیق وارد کنید" maxlength="100" required/>
                             </div>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="id_name_of_transferee">نام دریافت کننده</label>
-                                <input type="text" id="id_name_of_transferee" name="name_of_transferee" class="form-control form-control-lg"
-                                        maxlength="20" required/>
+                                <input type="text" id="id_name_of_transferee" name="name_of_transferee"
+                                       class="form-control form-control-lg"
+                                       maxlength="20" required/>
                             </div>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="id_phone_of_transferee">تلفن همراه دریافت کننده</label>
-                                <input type="text" id="id_phone_of_transferee" name="phone_of_transferee" class="form-control form-control-lg"
-                                        placeholder="برای مثال: ۰۹۱۲۱۲۳۴۵۶۷" maxlength="11" required/>
+                                <input type="text" id="id_phone_of_transferee" name="phone_of_transferee"
+                                       class="form-control form-control-lg"
+                                       placeholder="برای مثال: ۰۹۱۲۱۲۳۴۵۶۷" maxlength="11" required/>
                             </div>
+
+                            <p style="background-color:Tomato;"> <b> به علت گرمی هوا فعلا در شهر تهران میتوانیم ارسال کنیم</b></p>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="id_state">استان</label>
                                 <input type="text" id="id_state" name="state" class="form-control form-control-lg"
-                                       maxlength="30" required/>
+                                       maxlength="30" value="تهران" readonly required/>
                             </div>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="id_city">شهر</label>
                                 <input type="text" id="id_city" name="city" class="form-control form-control-lg"
-                                       maxlength="30" required/>
+                                       maxlength="30" value="تهران" readonly required/>
                             </div>
 
                             <input type="submit" class="btn btn-primary" value="ساخت آدرس">
