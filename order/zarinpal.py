@@ -14,7 +14,7 @@ ZP_API_STARTPAY = f"https://{sandbox}.zarinpal.com/pg/StartPay/"
 
 phone = '09374620298'  # Optional
 # Important: need to edit for realy server.
-CallbackURL = 'http://telond.ir/order/verify/'
+CallbackURL = 'https://telond.ir/order/verify/'
 
 
 def send_request(amount, description):
