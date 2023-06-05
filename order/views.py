@@ -22,8 +22,9 @@ def order_create(request):
         messages.error(request, 'نمی توان بیشتر از ۵ تا سفارش باز داشت', 'danger')
         return redirect('order:order_list')
     order = Order.objects.create(user=request.user)
-    if cart.get_total_price() < 300000:
-        order.post_cost = 20000 if request.POST['post_method'] == 'post_tehran' else 30000
+    if cart.get_total_price() < 390000:
+        order.post_cost = 35000
+        # order.post_cost = 20000 if request.POST['post_method'] == 'post_tehran' else 30000
         order.save()
     for item in cart:
         OrderItem.objects.create(order=order, product=item['product'], quantity=item['quantity'])
