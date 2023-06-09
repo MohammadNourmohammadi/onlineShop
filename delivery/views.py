@@ -65,3 +65,6 @@ class CustomerPackDetailView(generic.DetailView):
     model = DeliveryPack
     context_object_name = 'delivery_pack'
     template_name = 'delivery/customer_pack_detail.html'
+
+    def get_queryset(self):
+        return DeliveryPack.objects.filter(user=self.request.user)
