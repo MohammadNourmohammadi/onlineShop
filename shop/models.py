@@ -35,7 +35,7 @@ class Product(models.Model):
     pro_date = models.DateField()
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('?',)
 
     def __str__(self):
         return self.name
